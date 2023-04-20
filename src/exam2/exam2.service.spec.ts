@@ -11,7 +11,7 @@ const fakeEmptyError: string = "";
 const fakeSuccess = 11;
 const fakeError = 0;
 
-describe('Exam1Service', () => {
+describe('Exam2Service', () => {
   let service: Exam2Service;
 
   beforeEach(async () => {

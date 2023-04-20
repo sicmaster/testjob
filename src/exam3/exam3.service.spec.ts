@@ -1,78 +1,61 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Exam2Controller } from './exam2.controller';
-import { Exam2Service } from './exam2.service';
-import { Exam2Module } from './exam2.module';
+import { Exam3Controller } from './exam3.controller';
+import { Exam3Service } from './exam3.service';
+import { Exam3Module } from './exam3.module';
+import { IExam3, IResp, IRespObj } from './exam3.model';
 
-const fakeStartSuccess: string = "10:00:00";
-const fakeEndSuccess: string = "10:10:10";
-const fakeTimeInValid: string = "10:60:99";
-const fakeEmptyError: string = "";
+const fakeId = 1;
 
-const fakeSuccess = 11;
-const fakeError = 0;
+const fakeData: IExam3 = {
+  id: 0,
+  title: 'title',
+  description: 'description',
+};
 
-describe('Exam1Service', () => {
-  let service: Exam2Service;
+const fakeUpdateData: IExam3 = {
+  id: 1,
+  title: 'title2',
+  description: 'description2',
+};
+
+const fakeSuccess: IExam3 = { 
+  id: 1,
+  title: 'title',
+  description: 'description',
+};
+
+const fakeEmptySuccess: IExam3[] = [];
+
+describe('Exam3Service', () => {
+  let service: Exam3Service;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [Exam2Module],
-      providers: [Exam2Service],
-      controllers: [Exam2Controller],
+      imports: [Exam3Module],
+      providers: [Exam3Service],
+      controllers: [Exam3Controller],
     }).compile();
 
-    service = module.get<Exam2Service>(Exam2Service);
+    service = module.get<Exam3Service>(Exam3Service);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
 
-  describe('exam2', () => {
-    it('should return success', async () => {
+  describe('exam3', () => {
+    it('should get success', async () => {
+      const expectedResult = fakeEmptySuccess;
+
+      const actual = await service.getAll();
+
+      expect(expectedResult).toEqual(actual);
+    });
+
+    it('should create success', async () => {
       const expectedResult = fakeSuccess;
 
-      const actual = await service.getInterestingTime(fakeStartSuccess, fakeEndSuccess);
-
-      expect(expectedResult).toEqual(actual);
-    });
-
-    it('should return error start time empty', async () => {
-      const expectedResult = fakeError;
-
-      const actual = await service.getInterestingTime(fakeEmptyError, fakeEndSuccess);
-
-      expect(expectedResult).toEqual(actual);
-    });
-
-    it('should return error end time empty', async () => {
-      const expectedResult = fakeError;
-
-      const actual = await service.getInterestingTime(fakeStartSuccess, fakeEmptyError);
-
-      expect(expectedResult).toEqual(actual);
-    });
-
-    it('should return error start and end time empty', async () => {
-      const expectedResult = fakeError;
-
-      const actual = await service.getInterestingTime(fakeEmptyError, fakeEmptyError);
-
-      expect(expectedResult).toEqual(actual);
-    });
-
-    it('should return error start time over end time', async () => {
-      const expectedResult = fakeError;
-
-      const actual = await service.getInterestingTime(fakeEndSuccess, fakeStartSuccess);
-
-      expect(expectedResult).toEqual(actual);
-    });
-
-    it('should return error format time invalid', async () => {
-      const expectedResult = fakeError;
-
-      const actual = await service.getInterestingTime(fakeTimeInValid, fakeTimeInValid);
+      const actual = await service.create(fakeData);
 
       expect(expectedResult).toEqual(actual);
     });
