@@ -21,7 +21,8 @@ export class Exam1Service {
       }
       return prefix;
     } catch (error) {
-      return '';
+      // add log
+      return 'พบข้อผิดผลาด';
     }
   }
 
